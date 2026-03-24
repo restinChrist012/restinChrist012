@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "교회 성도 정보",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "member"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "prayerRequest": {
+      "title": "Prayer Request",
+      "description": "온라인 기도 요청",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "content": { "type": "string" },
+        "isPrivate": { "type": "boolean" },
+        "authorUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["content", "isPrivate", "createdAt"]
+    },
+    "dailySharing": {
+      "title": "Daily Sharing",
+      "description": "일상 나누기 게시글",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorUid": { "type": "string" },
+        "authorName": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "likes": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["authorUid", "title", "content", "createdAt"]
+    },
+    "sermon": {
+      "title": "Sermon",
+      "description": "설교 및 찬양 영상 정보",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "youtubeId": { "type": "string" },
+        "category": { "type": "string", "enum": ["주일설교", "특별설교", "찬양", "묵상"] },
+        "date": { "type": "string", "format": "date" },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "youtubeId", "category", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "user",
+      "description": "사용자 프로필"
+    },
+    "/prayerRequests/{requestId}": {
+      "schema": "prayerRequest",
+      "description": "기도 요청 목록"
+    },
+    "/dailySharings/{sharingId}": {
+      "schema": "dailySharing",
+      "description": "일상 나누기 목록"
+    },
+    "/sermons/{sermonId}": {
+      "schema": "sermon",
+      "description": "설교 및 찬양 아카이브"
+    }
+  }
+}

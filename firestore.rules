@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Fields: uid, displayName, email, photoURL, role, createdAt
+    //
+    // Collection: prayerRequests
+    // Fields: id, name, content, isPrivate, authorUid, createdAt
+    //
+    // Collection: dailySharings
+    // Fields: id, authorUid, authorName, title, content, imageUrl, likes, createdAt
+    //
+    // Collection: sermons
+    // Fields: id, title, youtubeId, category, date, description
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         (request.auth.token.email == "allplaces91@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    // User Validation
+    function isValidUser(data) {
+      return data.uid is string && 
+             data.email is string && isValidEmail(data.email) &&
+             data.role in ['admin', 'member'];
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.role == 'member';
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin()) && isValidUser(request.resource.data) && (request.resource.data.role == resource.data.role || isAdmin());
+    }
+
+    // Prayer Requests
+    function isValidPrayerRequest(data) {
+      return data.content is string && data.content.size() > 0 && data.content.size() < 5000 &&
+             data.isPrivate is bool;
+    }
+
+    match /prayerRequests/{requestId} {
+      allow read: if !resource.data.isPrivate || isOwner(resource.data.authorUid) || isAdmin();
+      allow create: if isValidPrayerRequest(request.resource.data) && 
+                    (!isAuthenticated() || request.resource.data.authorUid == request.auth.uid);
+      allow update, delete: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin());
+    }
+
+    // Daily Sharings
+    function isValidSharing(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
+             data.content is string && data.content.size() > 0 && data.content.size() < 10000;
+    }
+
+    match /dailySharings/{sharingId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && isOwner(request.resource.data.authorUid) && isValidSharing(request.resource.data);
+      allow update: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin()) && isValidSharing(request.resource.data);
+      allow delete: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin());
+    }
+
+    // Sermons
+    match /sermons/{sermonId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
