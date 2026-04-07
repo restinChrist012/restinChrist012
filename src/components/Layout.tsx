@@ -180,8 +180,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           
-          <div className="mt-16 pt-8 border-t border-white/10 text-center text-church-beige/40 text-xs">
-            © 2026 주님의 쉼터 교회. All rights reserved.
+          <div className="mt-16 pt-8 border-t border-white/10 text-center text-church-beige/40 text-xs flex flex-col gap-2">
+            <div>© 2026 주님의 쉼터 교회. All rights reserved.</div>
+            <div className="opacity-50">Version 0.1.0</div>
           </div>
         </div>
       </footer>
