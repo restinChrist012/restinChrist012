@@ -4,20 +4,55 @@ service cloud.firestore {
     // ===============================================================
     // Assumed Data Model
     // ===============================================================
+    //
     // Collection: users
-    // Fields: uid, displayName, email, photoURL, role, createdAt
+    // Document ID: {uid}
+    // Fields:
+    //   - uid: string (required)
+    //   - displayName: string
+    //   - email: string (required, format: email)
+    //   - photoURL: string
+    //   - role: string (required, enum: ['admin', 'member'])
+    //   - createdAt: timestamp (required)
     //
     // Collection: prayerRequests
-    // Fields: id, name, content, isPrivate, authorUid, createdAt
+    // Document ID: {requestId}
+    // Fields:
+    //   - id: string
+    //   - name: string
+    //   - content: string (required)
+    //   - isPrivate: boolean (required)
+    //   - authorUid: string
+    //   - createdAt: timestamp (required)
     //
     // Collection: dailySharings
-    // Fields: id, authorUid, authorName, title, content, imageUrl, likes, createdAt
+    // Document ID: {sharingId}
+    // Fields:
+    //   - id: string
+    //   - authorUid: string (required)
+    //   - authorName: string
+    //   - title: string (required)
+    //   - content: string (required)
+    //   - imageUrl: string
+    //   - likes: number
+    //   - createdAt: timestamp (required)
     //
     // Collection: sermons
-    // Fields: id, title, youtubeId, category, date, description
+    // Document ID: {sermonId}
+    // Fields:
+    //   - id: string
+    //   - title: string (required)
+    //   - youtubeId: string (required)
+    //   - category: string (required, enum: ['주일설교', '특별설교', '찬양', '묵상'])
+    //   - date: string (required, format: date)
+    //   - description: string
+    //
     // ===============================================================
 
+    // ===============================================================
     // Helper Functions
+    // ===============================================================
+    
     function isAuthenticated() {
       return request.auth != null;
     }
@@ -27,58 +62,80 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isAuthenticated() && 
+      return isAuthenticated() &&
         (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
-         (request.auth.token.email == "allplaces91@gmail.com" && request.auth.token.email_verified == true));
+          (request.auth.token.email == "allplaces91@gmail.com" && request.auth.token.email_verified == true));
     }
 
     function isValidEmail(email) {
       return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-    // User Validation
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
     function isValidUser(data) {
-      return data.uid is string && 
+      return data.uid is string &&
              data.email is string && isValidEmail(data.email) &&
-             data.role in ['admin', 'member'];
+             data.role in ['admin', 'member'] &&
+             data.createdAt is timestamp;
     }
 
-    match /users/{userId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.role == 'member';
-      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin()) && isValidUser(request.resource.data) && (request.resource.data.role == resource.data.role || isAdmin());
-    }
-
-    // Prayer Requests
-    function isValidPrayerRequest(data) {
+    function isValidPrayer(data) {
       return data.content is string && data.content.size() > 0 && data.content.size() < 5000 &&
-             data.isPrivate is bool;
+             data.isPrivate is bool &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidSermon(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
+             data.youtubeId is string &&
+             data.category in ['주일설교', '특별설교', '찬양', '묵상'] &&
+             data.date is string;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    (isOwner(uid) && request.resource.data.role == 'member' || isAdmin());
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    (isOwner(uid) && request.resource.data.role == resource.data.role || isAdmin());
+      allow delete: if isAdmin();
     }
 
     match /prayerRequests/{requestId} {
       allow read: if !resource.data.isPrivate || isOwner(resource.data.authorUid) || isAdmin();
-      allow create: if isValidPrayerRequest(request.resource.data) && 
-                    (!isAuthenticated() || request.resource.data.authorUid == request.auth.uid);
-      allow update, delete: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin());
-    }
-
-    // Daily Sharings
-    function isValidSharing(data) {
-      return data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
-             data.content is string && data.content.size() > 0 && data.content.size() < 10000;
+      allow create: if isAuthenticated() && isValidPrayer(request.resource.data) && 
+                    (request.resource.data.authorUid == request.auth.uid || !('authorUid' in request.resource.data));
+      allow update: if isAuthenticated() && isValidPrayer(request.resource.data) && 
+                    (isOwner(resource.data.authorUid) || isAdmin());
+      allow delete: if isOwner(resource.data.authorUid) || isAdmin();
     }
 
     match /dailySharings/{sharingId} {
       allow read: if true;
-      allow create: if isAuthenticated() && isOwner(request.resource.data.authorUid) && isValidSharing(request.resource.data);
-      allow update: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin()) && isValidSharing(request.resource.data);
-      allow delete: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.authorUid == request.auth.uid;
+      allow update: if isAuthenticated() && (isOwner(resource.data.authorUid) || isAdmin());
+      allow delete: if isOwner(resource.data.authorUid) || isAdmin();
     }
 
-    // Sermons
     match /sermons/{sermonId} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    // Default deny
+    match /{path=**} {
+      allow read, write: if false;
     }
   }
 }

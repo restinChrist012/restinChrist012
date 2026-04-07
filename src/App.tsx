@@ -14,6 +14,7 @@ import { Discipleship } from './pages/Discipleship';
 import { Community } from './pages/Community';
 import { Prayer } from './pages/Prayer';
 import { Healing } from './pages/Healing';
+import { Admin } from './pages/Admin';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/prayer" element={<Prayer />} />
           <Route path="/healing" element={<Healing />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Layout>
     </Router>

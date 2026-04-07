@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Heart, User, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, Heart, User, LogIn, LogOut, Shield } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { signInWithGoogle, logout } from '../lib/firebase';
@@ -19,7 +19,7 @@ const navItems = [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
   const location = useLocation();
 
   return (
@@ -51,6 +51,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   {item.name}
                 </Link>
               ))}
+
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className={cn(
+                    "text-sm font-bold transition-colors hover:text-church-green flex items-center gap-1",
+                    location.pathname === '/admin' ? "text-church-green" : "text-church-brown/70"
+                  )}
+                >
+                  <Shield size={16} />
+                  관리자
+                </Link>
+              )}
               
               {!loading && (
                 user ? (
