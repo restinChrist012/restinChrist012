@@ -30,9 +30,9 @@ export function About() {
             </div>
           </div>
           <img 
-            src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&q=80&w=1000" 
-            alt="Vision" 
-            className="rounded-3xl shadow-xl"
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1000" 
+            alt="Nature Vision" 
+            className="rounded-3xl shadow-xl aspect-square object-cover"
             referrerPolicy="no-referrer"
           />
         </section>
