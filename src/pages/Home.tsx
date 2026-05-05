@@ -106,13 +106,18 @@ export function Home() {
               transition={{ duration: 0.8, delay: 1.5 }}
               className="flex flex-wrap items-center justify-center gap-8"
             >
-              <Link to="/sermons" className="group relative btn-primary flex items-center gap-3 px-10 py-5 text-lg overflow-hidden shadow-2xl shadow-church-green/30">
+              <a 
+                href="https://www.youtube.com/@%EC%A3%BC%EB%8B%98%EC%95%88%EC%97%90%EC%89%BC%ED%84%B0" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative btn-primary flex items-center gap-3 px-10 py-5 text-lg overflow-hidden shadow-2xl shadow-church-green/30"
+              >
                 <motion.div 
                   className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"
                 />
                 <Play size={22} fill="currentColor" />
                 <span className="relative z-10">말씀 듣기</span>
-              </Link>
+              </a>
               <Link to="/discipleship" className="group flex items-center gap-3 bg-white/5 backdrop-blur-2xl text-white px-10 py-5 rounded-full font-medium border border-white/10 hover:bg-white/15 hover:border-white/30 transition-all text-lg">
                 <span>성경 공부 시작</span>
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -146,7 +151,7 @@ export function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { title: '말씀과 찬양', desc: '은혜로운 설교와 찬양 영상', icon: Play, path: '/sermons', color: 'bg-blue-50 text-blue-600' },
+              { title: '말씀과 찬양', desc: '은혜로운 설교와 찬양 영상', icon: Play, path: 'https://www.youtube.com/@%EC%A3%BC%EB%8B%98%EC%95%88%EC%97%90%EC%89%BC%ED%84%B0', isExternal: true, color: 'bg-blue-50 text-blue-600' },
               { title: '성경주석', desc: '깊이 있는 성경 해석과 묵상', icon: BookOpen, path: '/commentary', color: 'bg-emerald-50 text-emerald-600' },
               { title: '성경통독', desc: '주제별 성경 읽기 플랜', icon: CheckCircle, path: '/reading', color: 'bg-amber-50 text-amber-600' },
               { title: '예수님 안에', desc: '체계적인 제자훈련 시스템', icon: Heart, path: '/discipleship', color: 'bg-rose-50 text-rose-600' },
@@ -158,16 +163,34 @@ export function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
               >
-                <Link to={item.path} className="group block p-8 rounded-3xl border border-church-beige/50 hover:border-church-green hover:shadow-xl hover:shadow-church-green/5 transition-all h-full bg-church-ivory/20">
-                  <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", item.color)}>
-                    <item.icon size={28} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-church-brown/60 text-sm leading-relaxed mb-6">{item.desc}</p>
-                  <div className="flex items-center gap-2 text-church-green font-medium text-sm group-hover:translate-x-2 transition-transform">
-                    자세히 보기 <ArrowRight size={16} />
-                  </div>
-                </Link>
+                {item.isExternal ? (
+                  <a 
+                    href={item.path} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block p-8 rounded-3xl border border-church-beige/50 hover:border-church-green hover:shadow-xl hover:shadow-church-green/5 transition-all h-full bg-church-ivory/20"
+                  >
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", item.color)}>
+                      <item.icon size={28} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-church-brown/60 text-sm leading-relaxed mb-6">{item.desc}</p>
+                    <div className="flex items-center gap-2 text-church-green font-medium text-sm group-hover:translate-x-2 transition-transform">
+                      자세히 보기 <ArrowRight size={16} />
+                    </div>
+                  </a>
+                ) : (
+                  <Link to={item.path} className="group block p-8 rounded-3xl border border-church-beige/50 hover:border-church-green hover:shadow-xl hover:shadow-church-green/5 transition-all h-full bg-church-ivory/20">
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", item.color)}>
+                      <item.icon size={28} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-church-brown/60 text-sm leading-relaxed mb-6">{item.desc}</p>
+                    <div className="flex items-center gap-2 text-church-green font-medium text-sm group-hover:translate-x-2 transition-transform">
+                      자세히 보기 <ArrowRight size={16} />
+                    </div>
+                  </Link>
+                )}
               </motion.div>
             ))}
           </div>

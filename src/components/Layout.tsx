@@ -8,7 +8,7 @@ import { cn } from '../lib/utils';
 
 const navItems = [
   { name: '교회소개', path: '/about' },
-  { name: '말씀과 찬양', path: '/sermons' },
+  { name: '말씀과 찬양', path: 'https://www.youtube.com/@%EC%A3%BC%EB%8B%98%EC%95%88%EC%97%90%EC%89%BC%ED%84%B0', isExternal: true },
   { name: '성경주석', path: '/commentary' },
   { name: '성경통독', path: '/reading' },
   { name: '예수님 안에', path: '/discipleship' },
@@ -40,16 +40,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-8">
               {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-church-green",
-                    location.pathname === item.path ? "text-church-green" : "text-church-brown/70"
-                  )}
-                >
-                  {item.name}
-                </Link>
+                item.isExternal ? (
+                  <a
+                    key={item.path}
+                    href={item.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-colors hover:text-church-green text-church-brown/70"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-church-green",
+                      location.pathname === item.path ? "text-church-green" : "text-church-brown/70"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
 
               {isAdmin && (
@@ -106,14 +118,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
             >
               <div className="px-4 pt-2 pb-6 space-y-1">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block px-3 py-4 text-base font-medium text-church-brown hover:bg-church-ivory rounded-lg"
-                  >
-                    {item.name}
-                  </Link>
+                  item.isExternal ? (
+                    <a
+                      key={item.path}
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-3 py-4 text-base font-medium text-church-brown hover:bg-church-ivory rounded-lg"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-3 py-4 text-base font-medium text-church-brown hover:bg-church-ivory rounded-lg"
+                    >
+                      {item.name}
+                    </Link>
+                  )
                 ))}
                 <div className="pt-4 mt-4 border-t border-church-beige">
                   {user ? (
@@ -164,7 +189,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <h4 className="font-serif font-bold text-lg mb-6">Quick Links</h4>
               <ul className="space-y-4 text-church-beige/60">
                 <li><Link to="/about" className="hover:text-white transition-colors">교회소개</Link></li>
-                <li><Link to="/sermons" className="hover:text-white transition-colors">말씀과 찬양</Link></li>
+                <li>
+                  <a 
+                    href="https://www.youtube.com/@%EC%A3%BC%EB%8B%98%EC%95%88%EC%97%90%EC%89%BC%ED%84%B0" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="hover:text-white transition-colors"
+                  >
+                    말씀과 찬양
+                  </a>
+                </li>
                 <li><Link to="/prayer" className="hover:text-white transition-colors">기도요청</Link></li>
                 <li><Link to="/healing" className="hover:text-white transition-colors">예안숨터</Link></li>
               </ul>
