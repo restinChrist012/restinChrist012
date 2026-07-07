@@ -36,7 +36,7 @@ export function Discipleship() {
         <div className="text-center mb-20">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">제자훈련 로드맵</h2>
           <p className="text-church-brown/60 max-w-2xl mx-auto">
-            주님의 쉼터 교회는 모든 성도가 영적으로 성숙해질 수 있도록 <br />
+            베다니 장로교회는 모든 성도가 영적으로 성숙해질 수 있도록 <br />
             단계별 교육 과정을 제공합니다.
           </p>
         </div>

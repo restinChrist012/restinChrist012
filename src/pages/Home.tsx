@@ -41,7 +41,7 @@ export function Home() {
             >
               <h1 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-[1.3] tracking-tight text-white drop-shadow-xl">
                 <span className="block mb-2">
-                  {["\"주님의", "쉼터", "교회\"에", "오신 것을"].map((text, i) => (
+                  {["\"베다니", "장로교회\"에", "오신 것을"].map((text, i) => (
                     <span key={i} className="inline-block overflow-hidden mr-4 last:mr-0 pb-2">
                       <motion.span
                         className="inline-block"
@@ -258,7 +258,7 @@ export function Home() {
         <div className="relative z-10 max-w-3xl mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">함께 기도하겠습니다</h2>
           <p className="text-lg text-church-ivory/70 mb-10 leading-relaxed">
-            혼자 고민하지 마세요. 주님의 쉼터 교회 중보기도팀이 <br className="hidden md:block" />
+            혼자 고민하지 마세요. 베다니 장로교회 중보기도팀이 <br className="hidden md:block" />
             여러분의 기도 제목을 들고 하나님 앞에 나아가겠습니다.
           </p>
           <Link to="/prayer" className="btn-primary bg-white text-church-brown hover:bg-church-ivory">

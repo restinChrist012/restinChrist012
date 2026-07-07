@@ -32,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Heart size={24} fill="currentColor" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-serif font-bold text-church-brown leading-none">주님의 쉼터 교회</span>
+                <span className="text-xl font-serif font-bold text-church-brown leading-none">베다니 장로교회</span>
                 <span className="text-[10px] text-church-green font-medium tracking-widest uppercase">Rest in the Lord</span>
               </div>
             </Link>
@@ -177,11 +177,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <div className="w-8 h-8 bg-church-green rounded-lg flex items-center justify-center text-white">
                   <Heart size={18} fill="currentColor" />
                 </div>
-                <span className="text-xl font-serif font-bold">주님의 쉼터 교회</span>
+                <span className="text-xl font-serif font-bold">베다니 장로교회</span>
               </div>
               <p className="text-church-beige/70 max-w-md leading-relaxed">
                 지친 영혼이 예수 그리스도 안에서 참된 쉼과 회복을 얻는 공동체입니다. 
-                말씀과 성령으로 살아나는 주님의 쉼터로 여러분을 초대합니다.
+                말씀과 성령으로 살아나는 베다니 장로교회로 여러분을 초대합니다.
               </p>
             </div>
             
@@ -215,7 +215,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           
           <div className="mt-16 pt-8 border-t border-white/10 text-center text-church-beige/40 text-xs flex flex-col gap-2">
-            <div>© 2026 주님의 쉼터 교회. All rights reserved.</div>
+            <div>© 2026 베다니 장로교회. All rights reserved.</div>
             <div className="opacity-50">Version 0.1.0</div>
           </div>
         </div>

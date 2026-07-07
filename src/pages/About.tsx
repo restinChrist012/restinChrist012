@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 export function About() {
   return (
     <div>
-      <PageHeader title="교회소개" subtitle="주님의 쉼터 교회는 예수 그리스도 안에서 참된 쉼과 회복을 경험하는 공동체입니다." />
+      <PageHeader title="교회소개" subtitle="베다니 장로교회는 예수 그리스도 안에서 참된 쉼과 회복을 경험하는 공동체입니다." />
       
       <div className="max-w-7xl mx-auto px-4 py-24 space-y-24">
         {/* Vision & Mission */}
@@ -53,7 +53,7 @@ export function About() {
               <h2 className="text-3xl font-serif font-bold mt-2 mb-6">하나님 말씀으로 <br /> 영혼이 살아나는 사역을 꿈꿉니다</h2>
               <div className="space-y-4 text-church-brown/70 leading-relaxed">
                 <p>
-                  안녕하세요, 주님의 쉼터 교회 담임목사 안정열입니다. 
+                  안녕하세요, 베다니 장로교회 담임목사 안정열입니다. 
                   우리 교회는 지친 현대인들이 예수 그리스도 안에서 참된 안식을 누리기를 소망하며 세워졌습니다.
                 </p>
                 <p>
@@ -61,7 +61,7 @@ export function About() {
                   자신의 정체성을 회복하고, 성령님의 인도하심을 따라 기쁨의 삶을 살아가도록 돕는 것이 저의 사명입니다.
                 </p>
                 <p>
-                  주님의 쉼터 교회는 누구에게나 열려 있습니다. 
+                  베다니 장로교회는 누구에게나 열려 있습니다. 
                   함께 예배하며 주님이 주시는 평안을 누리시길 바랍니다.
                 </p>
               </div>

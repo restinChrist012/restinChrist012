@@ -63,7 +63,7 @@ export function Prayer() {
           <div>
             <h2 className="text-3xl font-serif font-bold mb-6">함께 기도하는 공동체</h2>
             <p className="text-church-brown/70 leading-relaxed mb-8">
-              주님의 쉼터 교회는 기도의 능력을 믿습니다. 
+              베다니 장로교회는 기도의 능력을 믿습니다. 
               여러분이 겪고 있는 어려움, 간절한 소망, 혹은 감사의 제목들을 남겨주세요. 
               중보기도팀이 매일 여러분의 이름을 불러가며 기도하겠습니다.
             </p>
