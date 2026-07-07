@@ -42,7 +42,7 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div className="col-span-1 pt-8">
               <img 
-                src="/pastor.jpg?v=2" 
+                src="/pastor.png?v=4" 
                 alt="안정열 담임목사" 
                 className="rounded-2xl shadow-lg aspect-[3/4] object-cover object-top"
                 referrerPolicy="no-referrer"
