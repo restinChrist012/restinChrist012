@@ -1,27 +1,8 @@
-import { useState } from 'react';
 import { PageHeader } from '../components/PageHeader';
 import { motion } from 'motion/react';
+import pastorImage from '../assets/images/pastor.png';
 
 export function About() {
-  const imageSources = [
-    '/pastor.jpg',
-    '/pastor.png',
-    '/Pastor.jpg',
-    '/Pastor.png',
-    'pastor.jpg',
-    'pastor.png'
-  ];
-  
-  const [imgIndex, setImgIndex] = useState(0);
-
-  const handleImageError = () => {
-    if (imgIndex < imageSources.length - 1) {
-      setImgIndex(imgIndex + 1);
-    }
-  };
-
-  const currentSrc = `${imageSources[imgIndex]}?v=${imgIndex + 20}`;
-
   return (
     <div>
       <PageHeader title="교회소개" subtitle="베다니 장로교회는 예수 그리스도 안에서 참된 쉼과 회복을 경험하는 공동체입니다." />
@@ -62,11 +43,9 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div className="col-span-1 pt-8">
               <img 
-                src={currentSrc} 
+                src={pastorImage} 
                 alt="안정열 담임목사" 
-                className="rounded-2xl shadow-lg aspect-[3/4] object-cover object-top"
-                referrerPolicy="no-referrer"
-                onError={handleImageError}
+                className="rounded-2xl shadow-lg aspect-[3/4] object-cover object-top w-full"
               />
             </div>
             <div className="col-span-2">
