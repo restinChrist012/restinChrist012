@@ -1,6 +1,5 @@
 import { PageHeader } from '../components/PageHeader';
 import { motion } from 'motion/react';
-import pastorImage from '../assets/images/pastor.png';
 
 export function About() {
   return (
@@ -43,9 +42,16 @@ export function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div className="col-span-1 pt-8">
               <img 
-                src={pastorImage} 
+                src="https://lh3.googleusercontent.com/d/1PK6KFOkuN-Jt8j0kn5m7IeJn91sqORfi" 
                 alt="안정열 담임목사" 
                 className="rounded-2xl shadow-lg aspect-[3/4] object-cover object-top w-full"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.src !== "https://drive.google.com/uc?export=view&id=1PK6KFOkuN-Jt8j0kn5m7IeJn91sqORfi") {
+                    target.src = "https://drive.google.com/uc?export=view&id=1PK6KFOkuN-Jt8j0kn5m7IeJn91sqORfi";
+                  }
+                }}
               />
             </div>
             <div className="col-span-2">
