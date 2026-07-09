@@ -23,7 +23,7 @@ export function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-church-brown/40 via-transparent to-church-brown/60" />
         </motion.div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-20 md:pt-0">
           <div className="max-w-4xl mx-auto text-center text-white">
             <motion.div
               initial="hidden"
@@ -39,10 +39,10 @@ export function Home() {
                 }
               }}
             >
-              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-10 leading-[1.3] tracking-tight text-white drop-shadow-xl">
-                <span className="block mb-2">
+              <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 md:mb-10 leading-[1.15] md:leading-[1.3] tracking-tight text-white drop-shadow-xl">
+                <span className="block mb-1 md:mb-2">
                   {["\"베다니", "장로교회\"에", "오신 것을"].map((text, i) => (
-                    <span key={i} className="inline-block overflow-hidden mr-4 last:mr-0 pb-2">
+                    <span key={i} className="inline-block overflow-hidden mr-3 last:mr-0 pb-0.5 md:pb-2">
                       <motion.span
                         className="inline-block"
                         variants={{
@@ -64,7 +64,7 @@ export function Home() {
                 </span>
                 <span className="block">
                   {["환영합니다."].map((text, i) => (
-                    <span key={i} className="inline-block overflow-hidden pb-2">
+                    <span key={i} className="inline-block overflow-hidden pb-0.5 md:pb-2">
                       <motion.span
                         className="inline-block"
                         variants={{
