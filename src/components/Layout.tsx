@@ -207,7 +207,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h4 className="font-serif font-bold text-lg mb-6">Contact</h4>
               <ul className="space-y-4 text-church-beige/60 text-sm">
-                <li>주소: 236 Pineway Blvd. North York. ON. CA. M2H 3G3</li>
+                <li>주소: 1057 McNicoll Ave 2nd Floor, Scarborough, ON M1W 3W6</li>
                 <li>전화: 647-808-9103</li>
                 <li>이메일: allplaces91@gmail.com</li>
               </ul>

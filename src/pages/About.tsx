@@ -81,11 +81,35 @@ export function About() {
         {/* Location */}
         <section>
           <h2 className="text-3xl font-serif font-bold mb-8 text-center">오시는 길</h2>
-          <div className="h-96 w-full rounded-3xl overflow-hidden shadow-inner bg-church-beige/30 flex items-center justify-center">
-            <div className="text-center p-8">
-              <p className="text-lg font-medium mb-2">구글 맵이 여기에 표시됩니다</p>
-              <p className="text-church-brown/50">주소: 236 Pineway Blvd. Toronto, ON, M2H 3G3</p>
-              <p className="text-church-brown/50">전화: 647-808-9103</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 h-[400px] w-full rounded-3xl overflow-hidden shadow-lg border border-church-beige">
+              <iframe
+                title="베다니장로교회 위치"
+                src="https://maps.google.com/maps?q=1057%20McNicoll%20Ave%202nd%20Floor,%20Scarborough,%20ON%20M1W%203W6&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-church-beige/30 flex flex-col justify-center">
+              <h3 className="font-serif font-bold text-xl mb-4 text-church-brown">교회 정보</h3>
+              <div className="space-y-4 text-church-brown/80">
+                <div>
+                  <p className="font-semibold text-xs text-church-brown/50 uppercase tracking-wider mb-1">주소</p>
+                  <p className="text-base font-medium">1057 McNicoll Ave 2nd Floor,<br />Scarborough, ON M1W 3W6</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-xs text-church-brown/50 uppercase tracking-wider mb-1">전화번호</p>
+                  <p className="text-base font-medium">647-808-9103</p>
+                </div>
+                <div>
+                  <p className="font-semibold text-xs text-church-brown/50 uppercase tracking-wider mb-1">이메일</p>
+                  <p className="text-base font-medium">allplaces91@gmail.com</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
